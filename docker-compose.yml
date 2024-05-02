@@ -1,0 +1,28 @@
+# docker-compose.yml
+
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: movie_catalog
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - '6379:6379'
+
+  nestjs:
+    build: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+      - redis
